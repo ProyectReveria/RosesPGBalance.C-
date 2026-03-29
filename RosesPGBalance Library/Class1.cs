@@ -36,7 +36,6 @@ class RPGRosesFramework
         Stadistic_Storage NewClass_Stadistics = new Stadistic_Storage();
         NewClass_Stadistics.Storage_Component = new Data_Storage[8];
         NewClass_Stadistics.Storage_Component[1].Health = Object_Health;
-            ;
         NewClass_Stadistics.Storage_Component[1].Player_Damage = Object_Player_Damage;
 
     }
