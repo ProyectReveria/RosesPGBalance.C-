@@ -1,23 +1,24 @@
-﻿using System;
+using System;
 using System.Diagnostics.Contracts;
 
 namespace RosesPGBalance_Library;
 
 class RPGRosesFramework 
 {
-
+    //! Default Value:
+    public static float Default_float = 0f;
+    public static int default_int = 0; 
     //!Variables
     public static float Contract_Health { get; set; } = 100f;
+    public static float Contract_Player_Damage { get; set; } = Default_float; 
     public static float Contract_Enemy_Healt { get; set; } = 100f;
 
     //?Data definitions
-    public struct NeedDAta
+
+    //?Memory Slots for Stadistics
+    public struct Stadistic_Storage
     {
-        public float Enemy_Health;
-        public float Player_Life;
-        public bool Game_Active;
-        public float Player_Damage;
-        public float Enemy_Damage;
+        public Data_Storage[] Storage_Component;
     }
     //?Data Operations 
 
@@ -28,10 +29,11 @@ class RPGRosesFramework
     static void Main()
     {
         //! Definiticiones
-        NeedDAta Enemy_Health_OnStorage = new NeedDAta();
-        Enemy_Health_OnStorage.Player_Life = Contract_Health; 
-        
-        Console.WriteLine(Enemy_Health_OnStorage.Player_Life.ToString());
+        Stadistic_Storage NewClass_Stadistics = new Stadistic_Storage();
+        NewClass_Stadistics.Storage_Component = new Player_Class[8];
+        NewClass_Stadistics.Player_Class[1].Health = Contract_Health;
+        NewClass_Stadistics.Player_Class[1].Damage = Contract_Player_Damage;
+
 
 
 
