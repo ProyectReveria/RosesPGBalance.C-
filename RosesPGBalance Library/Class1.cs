@@ -188,7 +188,8 @@ public class Calculation_Node
     public struct calculation_Results
     {
         public float Crit_Ratio;
-        public float DPS; 
+        public float DPS;
+        public float Damage_After_element;
     }
 
     public struct Calculation_Storage_Results
@@ -207,11 +208,16 @@ public class Calculation_Node
     {
         return DPS * damage_reduction;
     }
+    static float Damage_Multiply_By_Element(float damage, float element_Multiplier, float element_Name)
+    {
+        return damage * element_Multiplier; 
+    }
 
     public static void Storage_Data(RosesPGBalance_Library.Stadistic_Storage storage,RosesPGBalance_Library.Skill_or_Attack_Storage_Information Skill_Storage,RosesPGBalance_Library.Enemy_Storage Enemy_Library, onEven_Handler.slot_number Memory_Slot)
     {
         Calculation_Storage_Results Calculation_Storage_result = new Calculation_Storage_Results();
         Calculation_Storage_result.Storage_Component = new calculation_Results[8];
+        
         //Data extraction
         int Memory_Slot_number = Memory_Slot.Memory_Slot_onmemory;
         var Player_data = storage.Storage_Component[Memory_Slot_number];
@@ -227,11 +233,33 @@ public class Calculation_Node
         
         Calculation_Storage_result.Storage_Component[Memory_Slot_number].Crit_Ratio = crit_Ratio(Crit_Rate, attack_number);
         Calculation_Storage_result.Storage_Component[Memory_Slot_number].DPS = DPS(Damage,attack_number);
+        Calculation_Storage_result.Storage_Component[Memory_Slot_number].Damage_After_element = Damage_Multiply_By_Element(Skill_Slot1.ElementalAttackId,Skill_Slot1.ElementalAttackMultiplier, Damage);
 
     }
 }
 
+class ErrorHandler
+{
 
+    private struct OnError_Process_Handler
+    {
+        
+        private static void OnError_Process_Handler_Main(RosesPGBalance_Library.Stadistic_Storage storage, RosesPGBalance_Library.Skill_or_Attack_Storage_Information Skill_Storage, RosesPGBalance_Library.Enemy_Storage Enemy_Library, onEven_Handler.slot_number Memory_Slot)
+        {
+            int Memory_Slot_number = Memory_Slot.Memory_Slot_onmemory;
+            var Player_data = storage.Storage_Component[Memory_Slot_number];
+            var Skill_Slot1 = Skill_Storage.Storage_Component_ForSkills[Memory_Slot_number];
+            var Enemy_Data = Enemy_Library.E_Data_Storage[Memory_Slot_number];
+            foreach (var data in storage.Storage_Component)
+            {
+                if (data.Health <=0 && data.Player_Damage <= 0){
+                    Console.WriteLine($"[Error 00001] one stadistic data on slot Memory Data is empty or Null.");
+                }
+            }
+
+            }
+        }
+    }
 
 
 
